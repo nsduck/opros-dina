@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Опросник для Дины</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500&family=Onest:wght@500;600&display=swap">
+<style>
+:root{--bg:#fcf6ed;--warm:#f5e6d3;--tx:#241b13;--mut:#6b6157;--pri:#64313e;--onpri:#fff;--line:#e2d9ce;--field:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1717;--warm:#2b2323;--tx:#f5e6d3;--mut:#c8c0bf;--pri:#d8baba;--onpri:#211b1b;--line:#3d3434;--field:#241d1d;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1c1717;--warm:#2b2323;--tx:#f5e6d3;--mut:#c8c0bf;--pri:#d8baba;--onpri:#211b1b;--line:#3d3434;--field:#241d1d;color-scheme:dark}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--tx);font:17px/1.5 "Golos Text",system-ui,sans-serif}
+h1,.btn,.blk{font-family:Onest,"Golos Text",system-ui,sans-serif}
+.wrap{max-width:640px;margin:0 auto;padding:16px}
+.bar{height:4px;background:var(--line)}.bar i{display:block;height:100%;background:var(--pri);transition:width .3s}
+.top{display:flex;justify-content:space-between;align-items:center;max-width:640px;margin:0 auto;padding:12px 16px 0;color:var(--mut);font-size:15px}
+.link{background:none;border:0;color:var(--pri);font:inherit;text-decoration:underline;text-underline-offset:3px;padding:8px 0}
+.blk{margin:8px 0 4px;color:var(--pri);font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:500}
+h1{font-size:23px;line-height:1.3;font-weight:600;margin:0 0 20px}h1 span{color:var(--pri)}
+label{display:block;margin-bottom:16px;font-size:15px;color:var(--mut)}
+textarea{display:block;width:100%;box-sizing:border-box;min-height:140px;margin-top:6px;padding:14px;font:17px/1.5 "Golos Text",system-ui,sans-serif;color:var(--tx);background:var(--field);border:1.5px solid var(--line);border-radius:14px;resize:none}
+textarea:focus{outline:2px solid var(--pri);outline-offset:1px}
+.hint{font-size:14px;color:var(--mut);margin:0 0 16px}
+.nav{position:sticky;bottom:0;display:flex;gap:10px;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--line);max-width:640px;margin:0 auto}
+.btn{min-height:52px;padding:0 22px;border-radius:999px;border:1.5px solid var(--pri);background:transparent;color:var(--pri);font-size:17px;font-weight:500;cursor:pointer}
+.btn.p{background:var(--pri);color:var(--onpri);flex:1}.btn.w{width:100%;margin-bottom:10px}
+.item{display:flex;gap:12px;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:12px 0;color:var(--tx);font:inherit;font-size:16px}
+.dot{flex:none;width:14px;height:14px;margin-top:5px;border:1.5px solid var(--pri);border-radius:999px}.dot.on{background:var(--pri)}
+.grp{margin:22px 0 4px;color:var(--pri);font-family:Onest,sans-serif;font-weight:600}
+.box{background:var(--warm);border-radius:14px;padding:14px 16px;margin:16px 0;font-size:15px}
+.box ul{margin:6px 0 0;padding-left:20px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+(function(){
+var K="dina-opros-v1";
+var B=[
+["Твой путь",[
+[1,"Как ты пришла в электроэпиляцию? Чем занималась раньше и что стало поворотным моментом?"],
+[2,"Где, у кого и когда училась? Длительность, документ, организация, год."],
+[3,"Было ли дополнительное обучение или повышение квалификации? Что и когда?"],
+[4,"С какого года принимаешь клиентов? Сколько примерно клиентов или сеансов (только если можешь подтвердить)?"],
+[5,"С какими зонами и запросами работаешь чаще всего? С какими не работаешь?"],
+[6,"Что ты делаешь иначе, чем другие мастера? Одна конкретная вещь, не «индивидуальный подход»."],
+[7,"Что ты говоришь человеку на первом сеансе, чтобы он перестал бояться?"],
+[8,"Что ты никогда не делаешь, даже если клиент просит?"],
+[9,"Что тебе нравится в этой работе? Одно-два предложения."],
+[10,"История о клиенте, которому ты помогла больше всего (без имени): с чем пришёл, что ты сделала, чем закончилось."]]],
+["Метод и частые вопросы",[
+[11,"Как ты объясняешь, что такое электроэпиляция, человеку, который о ней не слышал? 3–4 предложения."],
+[12,"Какой техникой и аппаратом работаешь? Можно ли назвать марку?"],
+[13,"Сколько нужно сеансов? От чего зависит число, какие интервалы, есть ли примеры по зонам?",1],
+[14,"Больно ли? Как объясняешь ощущения и что делаешь для комфорта?",1],
+[15,"Сколько длится сеанс? Как выбрать длительность от 30 минут до 3 часов?",1],
+[16,"Можно ли удалять светлые и седые волосы?",1],
+[17,"Чем отличается от лазерной эпиляции? Берёшь ли клиентов после лазера?",1],
+[18,"Какие зоны обрабатываешь? Какие самые сложные?"],
+[19,"Какой миф слышишь чаще всего и что отвечаешь?"],
+[20,"Какие противопоказания и ограничения? Откуда у тебя этот список? Когда отправляешь к врачу?",1],
+[21,"Можно ли делать процедуру летом? Что говоришь про загар?",1],
+[22,"Какие частые вопросы клиентов не вошли сюда? Назови 3–5."]]],
+["Подготовка и уход",[
+[23,"Что сделать за несколько дней до сеанса? Чего избегать?"],
+[24,"Что сделать в день сеанса перед приходом?"],
+[25,"Какой длины должны быть волосы? Можно ли брить зону между сеансами? Можно ли выдёргивать и почему нет?",1],
+[26,"Как проходит сеанс по шагам: от входа в кабинет до ухода? Что делаешь и сколько минут."],
+[27,"Что делать сразу после сеанса и в первые дни? Чем ухаживать?"],
+[28,"Чего нельзя между сеансами (солнце, баня, спорт) и как долго?"],
+[29,"Какие реакции кожи нормальны и сколько держатся? При каких признаках нужно к врачу?"],
+[30,"Отличаются ли рекомендации для разных зон? Чем?"]]],
+["Кабинет и безопасность",[
+[31,"Что ты делаешь с кабинетом и рабочим местом перед каждым клиентом? По шагам."],
+[32,"Иглы и электроды: одноразовые? Как открываются при клиенте? Что с ними после?"],
+[33,"Перчатки, гигиена рук, другие расходники: что и когда меняешь?"],
+[34,"Чем и как обрабатываешь поверхности и оборудование?"],
+[35,"Какое оборудование используешь и как его обслуживаешь?"],
+[36,"Как утилизируешь использованные материалы?"],
+[37,"Какие документы есть (сертификаты, договоры, разрешения)? Что можно показать на сайте?"],
+[38,"Может ли клиент увидеть, как вскрывается расходник? Приглашаешь ли?"]]],
+["Результаты",[
+[39,"Кейсы (опиши каждого клиента по порядку): зона; сколько сеансов и за какой срок; на каком этапе курса фото «после»; какая была ситуация; что изменилось и что осталось; есть ли письменное согласие на публикацию фото; как сделаны фото."],
+[40,"Как объясняешь клиентам, почему результат у всех разный?"]]],
+["Цены и запись",[
+[41,"Почему стоимость считается по времени, а не по зоне? Как подобрать длительность?"],
+[42,"Что входит в ознакомительный сеанс? Можно ли за 20 минут сразу обработать зону?"],
+[43,"Есть ли другие услуги, абонементы, скидки или пакеты? Если нет, пропусти."],
+[44,"Как можно оплатить? Нужна ли предоплата? Правила переноса, отмены и опозданий."],
+[45,"Что взять на первый визит? Есть ли ограничения по возрасту, нужно ли согласие родителей?"]]],
+["Контакты и доверие",[
+[46,"Ссылки на соцсети и лучший способ связи: где отвечаешь быстрее?"],
+[47,"Как найти кабинет: ориентиры, остановки, парковка, вход, домофон, этаж."],
+[48,"График приёма постоянный? Как предупреждаешь об изменениях?"],
+[49,"Где лежат отзывы клиентов? Какие 3–5 можно опубликовать и как подписать автора?"],
+[50,"Есть ли публикации, выступления, участие в профессиональных сообществах?"]]],
+["Блог (можно позже)",[
+[51,"О каких 5 темах хочется рассказывать клиентам?"],
+[52,"Какие ситуации из практики (без имён) могут стать основой статей?"]]]
+];
+var Q=[];B.forEach(function(g){g[1].forEach(function(r){Q.push({id:r[0],b:g[0],t:r[1],two:!!r[2]})})});
+var S={a:{},i:0,v:"start"};
+try{var r=JSON.parse(localStorage.getItem(K));if(r&&r.a){S.a=r.a;S.i=r.i||0}}catch(e){}
+var app=document.getElementById("app");
+function save(){try{localStorage.setItem(K,JSON.stringify({a:S.a,i:S.i}))}catch(e){}}
+function pad(n){return n<10?"0"+n:""+n}
+function done(q){return(S.a[q.id]||[]).some(function(x){return x&&x.trim()})}
+function cnt(){return Q.filter(done).length}
+function go(v,i){S.v=v;if(i!=null)S.i=i;save();render();window.scrollTo(0,0)}
+function fit(t){t.style.height="auto";t.style.height=Math.max(t.scrollHeight,140)+"px"}
+function hdr(){var p=Math.round((S.i+1)/Q.length*100);return '<div class="bar"><i style="width:'+p+'%"></i></div><div class="top"><span>Вопрос '+(S.i+1)+' из '+Q.length+' · отвечено '+cnt()+'</span><button class="link" id="ls">Список</button></div>'}
+function render(){S.v==="start"?start():S.v==="list"?list():S.v==="done"?fin():ask()}
+function start(){
+ var n=cnt();
+ app.innerHTML='<main class="wrap"><p class="blk">Опросник для сайта</p><h1>Привет, Дина!</h1><p>Здесь '+Q.length+' вопросов для сайта. Отвечай по одному так, как говоришь клиенту.</p><div class="box"><ul><li>Можно диктовать голосом: значок микрофона на клавиатуре.</li><li>Ответы сохраняются сами. Можно закрыть и вернуться позже.</li><li>Не знаешь или не хочешь публиковать? Жми «Дальше».</li></ul></div><button class="btn p w" id="st">'+(n?"Продолжить":"Начать")+'</button>'+(n?'<button class="btn w" id="ls2">Список вопросов</button>':"")+'</main>';
+ document.getElementById("st").onclick=function(){go("q")};
+ var l=document.getElementById("ls2");if(l)l.onclick=function(){go("list")};
+}
+function ask(){
+ var q=Q[S.i],a=S.a[q.id]||["",""],last=S.i===Q.length-1;
+ app.innerHTML=hdr()+'<main class="wrap"><p class="blk">'+q.b+'</p><h1><span>Ф-'+pad(q.id)+'</span> '+q.t+'</h1>'+(q.two?'<label>Короткий ответ: одно предложение<textarea data-k="0"></textarea></label><label>Развёрнутый ответ<textarea data-k="1"></textarea></label>':'<textarea data-k="0" placeholder="Твой ответ…"></textarea>')+'</main><div class="nav"><button class="btn" id="bk">Назад</button><button class="btn p" id="nx">'+(last?"Готово":"Дальше")+'</button></div>';
+ document.querySelectorAll("textarea").forEach(function(t){
+  t.value=a[+t.dataset.k]||"";fit(t);
+  t.oninput=function(){var v=S.a[q.id]||(S.a[q.id]=["",""]);v[+t.dataset.k]=t.value;fit(t);save()};
+ });
+ document.getElementById("ls").onclick=function(){go("list")};
+ document.getElementById("bk").onclick=function(){S.i?go("q",S.i-1):go("start")};
+ document.getElementById("nx").onclick=function(){last?go("done"):go("q",S.i+1)};
+}
+function list(){
+ var h='<main class="wrap"><h1>Все вопросы</h1>';
+ B.forEach(function(g){h+='<p class="grp">'+g[0]+'</p>';g[1].forEach(function(r){var i=r[0]-1;h+='<button class="item" data-i="'+i+'"><span class="dot'+(done(Q[i])?" on":"")+'"></span><span>'+r[1]+'</span></button>'});});
+ h+='</main><div class="nav"><button class="btn" id="b1">К вопросу</button><button class="btn p" id="b2">Закончить</button></div>';
+ app.innerHTML=h;
+ document.querySelectorAll(".item").forEach(function(b){b.onclick=function(){go("q",+b.dataset.i)}});
+ document.getElementById("b1").onclick=function(){go("q")};
+ document.getElementById("b2").onclick=function(){go("done")};
+}
+function compile(){
+ var o="Ответы Дины на опросник\n";
+ B.forEach(function(g){
+  var rows=g[1].filter(function(r){return done(Q[r[0]-1])});
+  if(!rows.length)return;
+  o+="\n## "+g[0]+"\n";
+  rows.forEach(function(r){var a=S.a[r[0]]||[];o+="\nФ-"+pad(r[0])+". "+r[1]+"\n"+(r[2]?"Короткий: "+(a[0]||"—")+"\nРазвёрнутый: "+(a[1]||"—"):"Ответ: "+a[0])+"\n"});
+ });
+ var skip=Q.filter(function(q){return!done(q)}).map(function(q){return pad(q.id)});
+ return o+"\nБез ответа: "+(skip.join(", ")||"нет")+"\n";
+}
+function fin(){
+ var txt=compile();
+ app.innerHTML='<main class="wrap"><p class="blk">Почти всё</p><h1>Отвечено '+cnt()+' из '+Q.length+'</h1><p>Нажми «Отправить» и выбери мессенджер, в котором пришлёшь ответы тому, кто делает сайт. Если меню не откроется, ответы скопируются, и их можно вставить в сообщение.</p><button class="btn p w" id="sh">Отправить ответы</button><button class="btn w" id="cp">Скопировать</button><p class="hint" id="msg"></p><div class="box">Фото и документы пришли отдельно:<ul><li>портрет без надписей, фото кабинета, рабочего места и оборудования</li><li>сертификаты и документы об обучении</li><li>фото «до и после» с письменными согласиями клиентов</li><li>отзывы с разрешением на публикацию</li></ul></div><button class="btn w" id="bk">Вернуться к вопросам</button><textarea id="all" readonly></textarea></main>';
+ var ta=document.getElementById("all"),msg=document.getElementById("msg");
+ ta.value=txt;fit(ta);
+ function copy(){
+  var p;try{p=navigator.clipboard.writeText(txt)}catch(e){p=Promise.reject(e)}
+  return p.then(function(){return 1},function(){ta.select();try{return document.execCommand("copy")}catch(e){return 0}});
+ }
+ document.getElementById("cp").onclick=function(){copy().then(function(ok){msg.textContent=ok?"Скопировано.":"Не получилось скопировать. Выдели текст ниже вручную."})};
+ document.getElementById("sh").onclick=function(){
+  if(navigator.share){navigator.share({title:"Ответы Дины",text:txt}).catch(function(e){if(e&&e.name!=="AbortError")copy().then(function(){msg.textContent="Скопировано. Вставь в сообщение."})});}
+  else copy().then(function(){msg.textContent="Скопировано. Вставь в сообщение."});
+ };
+ document.getElementById("bk").onclick=function(){go("q")};
+}
+render();
+})();
+</script>
+</body>
+</html>
